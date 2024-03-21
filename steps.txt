@@ -12,3 +12,12 @@ BASH COMMANDS :
     touch .gitignore
     git add .
     git commit -m '01-Start'
+
+    ADD CUSTOMUSER MODEL
+    python manage.py makemigrations 
+    python mange.py migrate
+    python manage.py createsuperuser
+
+    ADD PROFILE MODEL
+    python manage.py makemigrations 
+    python mange.py migrate
