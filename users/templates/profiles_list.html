@@ -1,0 +1,47 @@
+{% extends 'extends/base.html' %}<!---->
+{% block title %}Profiles{% endblock %}<!---->
+{% load static %}<!---->
+
+{% block content %}
+<h1>Profiles List</h1>
+
+{% for profile in profiles %}<!---->
+
+<div class="card mb-3" style="max-width: 540px">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img
+        src="{% static 'images/default.jpg' %}"
+        class="img-fluid rounded-start"
+        alt="Profile Image"
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a
+            class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
+            href="{% url 'profile' profile.user_id %}"
+            >@{{ profile.user.username|title }}</a
+          >
+        </h5>
+        <p class="card-text">
+          <strong>Email: </strong>{{ profile.user.email }}
+          <br />
+          <strong>Bio: </strong>Lorem ipsum dolor sit amet, consectetur
+          adipisicing elit. Officia sunt, dignissimos odio minima est
+          exercitationem.
+        </p>
+        <p class="card-text">
+          <small class="text-body-secondary"
+            >Last Updated {{ profile.date_modified|timesince }}</small
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}<!---->
+
+{% endblock %}

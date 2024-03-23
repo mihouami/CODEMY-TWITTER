@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Meep
 
-# Register your models here.
+@admin.register(Meep)
+class MeepAdmin(admin.ModelAdmin):
+    list_display = ["meep", "author", "date_added", "date_modified"]

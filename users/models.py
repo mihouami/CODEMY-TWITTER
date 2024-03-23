@@ -22,6 +22,8 @@ class Profile(models.Model):
                                     symmetrical=False,
                                     blank=True)
     
+    date_modified = models.DateTimeField(auto_now=True)
+    
     def __str__(self):
         return self.user.username
     

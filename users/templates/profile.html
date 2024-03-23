@@ -1,0 +1,93 @@
+{% extends 'extends/base.html' %}<!---->
+{% block title %}Profiles{% endblock %}<!---->
+{% load static %}<!---->
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 text-center">
+    <div>
+      <h1>{{ profile.user.username|title }}' Profile</h1>
+      <br />
+      {% for meep in meeps %}
+      <div class="p-2 bg-secondary-subtle">
+        <p><strong>{{ meep.meep }}</strong></p>
+        <small class="text-body-secondary"
+          >Last Updated {{ meep.date_modified|timesince }}</small
+        >
+      </div>
+      <br />
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="row g-3">
+      <div class="col-12 d-flex justify-content-center">
+        <div class="card w-75">
+          <div class="card-header text-center fw-bold fs-4">
+            {{ profile.user.username|title }} Follows
+          </div>
+          <div class="card-body text-center">
+            {% for follow in profile.follows.all %}
+            <p class="card-text fw-bold">
+              <a
+                class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
+                href="{% url 'profile' follow.id %}"
+                >@{{ follow|lower }}</a
+              >
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex justify-content-center">
+        <div class="card w-75">
+          <div class="card-header text-center fw-bold fs-4">
+            {{ profile.user.username|title }}'s Followed by
+          </div>
+          <div class="card-body text-center">
+            {% for followed in profile.followed_by.all %}
+            <p class="card-text fw-bold">
+              <a
+                class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
+                href="{% url 'profile' followed.id %}"
+                >@{{ followed|lower }}</a
+              >
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      {% if profile in user.profile.follows.all %}
+      <div class="col-12 d-flex justify-content-center">
+        <a
+          href="{% url 'follow_unfollow' profile.id %}"
+          class="btn btn-outline-danger fw-bold"
+        >
+          Unfollow @{{ profile.user.username|lower }}
+        </a>
+      </div>
+      {% else %}
+      <div class="col-12 d-flex justify-content-center">
+        <a
+          href="{% url 'follow_unfollow' profile.id %}"
+          class="btn btn-outline-success fw-bold"
+        >
+          Follow @{{ profile.user.username|lower }}
+        </a>
+      </div>
+      {% endif %}
+
+      <div class="col-12 d-flex justify-content-center">
+        <a
+          class="btn btn-outline-primary fw-bold"
+          href="{% url 'profiles_list' %}"
+          >Back to Profiles</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
