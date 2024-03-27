@@ -28,6 +28,9 @@ INSTALLED_APPS = [
 
     "musker",
     "users",
+
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -115,3 +118,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # AUTH WITH EMAIL
 AUTH_USER_MODEL = 'users.CustomUser'
+
+
+# CRISPY
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

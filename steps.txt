@@ -15,13 +15,9 @@ BASH COMMANDS :
 
 
 BASH COMMANDS : ADD CUSTOMUSER MODEL
-    python manage.py makemigrations 
-    python mange.py migrate
     python manage.py createsuperuser
 
 BASH COMMANDS : ADD PROFILE MODEL
-    python manage.py makemigrations 
-    python manage.py migrate
 
     git add .
     git commit -m '02-CustomUser and Profile models'
@@ -29,9 +25,16 @@ BASH COMMANDS : ADD PROFILE MODEL
     git add .
     git commit -m '03-Add signal to connect User with Profile automatically and make it follow himself'
 
-    $ python manage.py makemigrations
-    $ python manage.py migrate
+    python manage.py makemigrations
+    python manage.py migrate
 
 BASH COMMANDS : ADD MEEP MODEL
-    python manage.py makemigrations 
-    python manage.py migrate
+
+    git add .
+    git commit -m '04-Add Profile detail page'
+
+BASH COMMANDS : add meeps from APP
+
+    git add .
+    git commit -m '05-Add Meeps from app'
+
