@@ -12,24 +12,32 @@
       <br />
       {% for meep in meeps %}
       <p class="py-3 mb-4 border bg-secondary-subtle rounded">
-        <strong>{{ meep.meep }} </strong
-        ><small class="text-body-secondary"
-          >({{ meep.date_added }} By
+        <strong>{{ meep.meep }} </strong><br /><br /><small
+          class="text-body-secondary"
+          >Added {{ meep.date_added|timesince }} By
           <a
             class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
             href="{% url 'profile' meep.author.id %}"
             >@{{ meep.author}}</a
-          >)</small
+          ></small
         >
       </p>
       {% endfor %}
     </div>
 
     <div class="col-lg-4">
+      {% if form %}
       <form method="post">
         {% csrf_token %} {{ form|crispy }}
-        <button formnovalidate class="btn btn-primary mt-2">Submit</button>
+        <button
+          formnovalidate
+          class="btn btn-primary mt-2"
+          id="submit-id-submit"
+        >
+          Submit
+        </button>
       </form>
+      {% endif %}
     </div>
   </div>
 </div>

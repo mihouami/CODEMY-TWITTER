@@ -38,3 +38,8 @@ BASH COMMANDS : add meeps from APP
     git add .
     git commit -m '05-Add Meeps from app'
 
+BASH COMMANDS : LOGIN AND LOGOUT
+
+    git add .
+    git commit -m '06-Login (2 ways), Logout and Meep field validation while tapping HTMX'
+

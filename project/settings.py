@@ -25,10 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "musker",
     "users",
-
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -117,9 +115,12 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # AUTH WITH EMAIL
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = "users.CustomUser"
 
 
 # CRISPY
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# REDIRECT URL NAME WHEN LOGIN IS REQUIRED
+LOGIN_URL = "login"

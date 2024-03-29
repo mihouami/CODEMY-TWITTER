@@ -2,9 +2,15 @@ from django.db import models
 from users.models import Profile
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
+
 class Meep(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="meeps")
-    meep = models.CharField(max_length=255, blank=False, null=False, validators=[MinLengthValidator(5), MaxLengthValidator(255)])
+    meep = models.CharField(
+        max_length=30,
+        blank=False,
+        null=False,
+        validators=[MinLengthValidator(5), MaxLengthValidator(255)],
+    )
     date_added = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
