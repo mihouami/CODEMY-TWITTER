@@ -15,6 +15,7 @@ class MeepForm(forms.ModelForm):
     class Meta:
         model = Meep
         fields = ["meep"]
+        unique_together=('meep')
         widgets = {
             "meep": forms.Textarea(
                 attrs={
@@ -22,15 +23,17 @@ class MeepForm(forms.ModelForm):
                     'hx-get':reverse_lazy('check_meep'),
                     'hx-trigger':'keyup change',
                     'hx-target':'#div_id_meep',
+                    'hx-swap':'outerHTML',
                     }
             ),
         }
+        
         labels = {
             "meep": "",
         }
 
     def clean_meep(self):
-        meep = self.cleaned_data.get("meep").split()
-        if "fck" in meep:
+        meep = self.cleaned_data.get("meep")
+        if "fck" in meep.split():
             raise forms.ValidationError("Prohibited world in meep!")
-        return " ".join(meep)
+        return meep

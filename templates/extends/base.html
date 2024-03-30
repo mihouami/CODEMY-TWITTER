@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css '%}" />
     <title>{% block title %}{% endblock %}</title>
   </head>
-  <body>
+  <body hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}'>
     {% include 'include/navbar.html' %}
     <div class="container">{% include 'include/messages.html' %}</div>
     <br />

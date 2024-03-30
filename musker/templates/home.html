@@ -10,29 +10,37 @@
     <div class="col-lg-8">
       <h1>Meeps!</h1>
       <br />
-      {% for meep in meeps %}
-      <p class="py-3 mb-4 border bg-secondary-subtle rounded">
-        <strong>{{ meep.meep }} </strong><br /><br /><small
-          class="text-body-secondary"
-          >Added {{ meep.date_added|timesince }} By
-          <a
-            class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
-            href="{% url 'profile' meep.author.id %}"
-            >@{{ meep.author}}</a
-          ></small
-        >
-      </p>
-      {% endfor %}
+      <div id="meep-div">
+        {% for meep in meeps %}
+        <p class="py-3 mb-4 border bg-secondary-subtle rounded">
+          <strong>{{ meep.meep }} </strong><br /><br /><small
+            class="text-body-secondary"
+            >Added {{ meep.date_added|timesince }} By
+            <a
+              class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
+              href="{% url 'profile' meep.author.id %}"
+              >@{{ meep.author}}</a
+            ></small
+          >
+        </p>
+        {% endfor %}
+      </div>
     </div>
 
     <div class="col-lg-4">
       {% if form %}
-      <form method="post">
-        {% csrf_token %} {{ form|crispy }}
+      <form
+        id="form-id"
+        hx-post="{% url 'home' %}"
+        hx-target="#meep-div"
+        hx-swap="afterbegin"
+      >
+        {{ form|crispy }}
         <button
           formnovalidate
           class="btn btn-primary mt-2"
           id="submit-id-submit"
+          disabled
         >
           Submit
         </button>

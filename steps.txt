@@ -43,3 +43,9 @@ BASH COMMANDS : LOGIN AND LOGOUT
     git add .
     git commit -m '06-Login (2 ways), Logout and Meep field validation while tapping HTMX'
 
+BASH COMMANDS : REGISTER
+
+    git add .
+    git commit -m '07- Register (2 ways)'
+
+

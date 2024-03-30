@@ -13,7 +13,7 @@ def home(request):
                 meep = form.save(commit=False)
                 meep.author = request.user.profile
                 meep.save()
-                return redirect("home")
+                return render(request, 'partials/meep.html', {'meep':meep, 'form':MeepForm()})
         context = {"meeps": meeps, "form": form}
         return render(request, "home.html", context)
     else:

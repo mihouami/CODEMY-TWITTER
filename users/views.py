@@ -8,7 +8,7 @@ from project.decorators import (
     login_required_with_message,
 )
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
+from .forms import LoginForm, UserRegisterForm
 
 
 # PROFILE LIST VIEW
@@ -72,7 +72,7 @@ def login_user2(request):
             )
             if user is not None:
                 login(request, user)
-                messages.warning(request, "You have been successfully logged In")
+                messages.success(request, "You have been successfully logged In")
                 next = request.GET.get("next")
                 if next:
                     return redirect(next)
@@ -88,5 +88,18 @@ def login_user2(request):
 @redirect_if_logged_out
 def logout_user(request):
     logout(request)
-    messages.warning(request, "You have been successfully logged Out")
+    messages.success(request, "You have been successfully logged Out")
     return redirect("home")
+
+
+
+# REGISTER USERS
+@redirect_if_logged_in
+def register_user(request):
+    form = UserRegisterForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            messages.success(request, "You have been successfully Registered")
+            return redirect('login2')
+    return render(request, 'register.html', {'form':form})
