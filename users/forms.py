@@ -4,20 +4,44 @@ from crispy_forms.layout import Layout, Submit, HTML, Div
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
+from django.urls import reverse_lazy
+
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'mobile']
+    
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "post"
+        self.helper.form_action = reverse_lazy("update_profile", kwargs={'pk': self.instance.pk})
+        self.helper.layout = Layout(
+            FloatingField("username"),
+            FloatingField("email"),
+            FloatingField("mobile"),
+            Div(
+                Submit(
+                    "submit",
+                    "Update",
+                    formnovalidate="formnovalidate",
+                    css_class="btn btn-outline-success btn-lg",
+                ),
+                css_class="d-grid gap-2 mb-3",
+            ),
+        )
+
 
 
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'mobile', 'password1', 'password2']
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields["username"].label = "Username"
-        self.fields["email"].label = "Email"
-        self.fields["mobile"].label = "Mobile"
-        self.fields["password1"].label = "Password"
-        self.fields["password2"].label = "Confirm Password"
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_action = "register"
@@ -52,13 +76,11 @@ class UserRegisterForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label="", max_length=50, required=True)
+    email = forms.EmailField(max_length=50, required=True)
     password = forms.CharField(widget=forms.PasswordInput, max_length=30, required=True)
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
-        self.fields["email"].label = "Email"
-        self.fields["password"].label = "Password"
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_action = "login2"

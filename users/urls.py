@@ -5,6 +5,7 @@ urlpatterns = [
     path("profiles/", profiles_list, name="profiles_list"),
     path("profile/<int:pk>/", profile, name="profile"),
     path("follow_unfollow/<int:pk>/", follow_unfollow, name="follow_unfollow"),
+    path("update_profile/<int:pk>/", update_profile, name="update_profile"),
 
     # Login URLs
     path("login/", login_user, name="login"),

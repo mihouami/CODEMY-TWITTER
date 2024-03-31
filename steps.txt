@@ -46,6 +46,9 @@ BASH COMMANDS : LOGIN AND LOGOUT
 BASH COMMANDS : REGISTER
 
     git add .
-    git commit -m '07- Register (2 ways)'
+    git commit -m '07- Register User, submit Meep with HTMX'
 
+BASH COMMANDS : UPDATE USER
 
+    git add .
+    git commit -m '08- UPDATE PROFILE'

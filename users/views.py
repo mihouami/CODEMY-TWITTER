@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Profile
+from .models import Profile, CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from project.decorators import (
@@ -8,7 +8,7 @@ from project.decorators import (
     login_required_with_message,
 )
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, UserRegisterForm
+from .forms import LoginForm, UserRegisterForm, UserUpdateForm
 
 
 # PROFILE LIST VIEW
@@ -29,7 +29,6 @@ def profile(request, pk):
 
 
 # FOLLOW - UNFOLLOW VIEW
-@login_required
 @login_required_with_message
 def follow_unfollow(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
@@ -103,3 +102,20 @@ def register_user(request):
             messages.success(request, "You have been successfully Registered")
             return redirect('login2')
     return render(request, 'register.html', {'form':form})
+
+
+# UPDATE PROFILE
+@login_required_with_message
+def update_profile(request, pk):
+    user = get_object_or_404(CustomUser, pk=pk)
+    if request.user.id != user.id:
+        messages.warning(request, 'You are not allowed to access this page.')
+        return redirect('profile', pk=user.id)
+    elif request.user.id == user.id:
+        form = UserUpdateForm(request.POST or None, instance=user)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Profile Updated!')
+                return redirect('update_profile', pk=user.id)
+        return render(request, 'update_profile.html', {'form':form})
