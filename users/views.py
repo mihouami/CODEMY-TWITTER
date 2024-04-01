@@ -9,6 +9,7 @@ from project.decorators import (
 )
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegisterForm, UserUpdateForm
+from django.core.files.storage import default_storage
 
 
 # PROFILE LIST VIEW
@@ -24,7 +25,8 @@ def profiles_list(request):
 def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     meeps = profile.meeps.all()
-    context = {"profile": profile, "meeps": meeps}
+    url = '/media/images/default.jpg'
+    context = {"profile": profile, "meeps": meeps, "url":url}
     return render(request, "profile.html", context)
 
 
@@ -95,12 +97,14 @@ def logout_user(request):
 # REGISTER USERS
 @redirect_if_logged_in
 def register_user(request):
-    form = UserRegisterForm(request.POST or None)
+    form = UserRegisterForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             messages.success(request, "You have been successfully Registered")
             return redirect('login2')
+        else:
+            messages.warning(request, 'something went wrong')
     return render(request, 'register.html', {'form':form})
 
 
@@ -112,10 +116,27 @@ def update_profile(request, pk):
         messages.warning(request, 'You are not allowed to access this page.')
         return redirect('profile', pk=user.id)
     elif request.user.id == user.id:
-        form = UserUpdateForm(request.POST or None, instance=user)
+        form = UserUpdateForm(request.POST or None, request.FILES or None, instance=user)
         if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Profile Updated!')
-                return redirect('update_profile', pk=user.id)
+                return redirect('profile', pk=user.id)
         return render(request, 'update_profile.html', {'form':form})
+    
+
+# DELETE PROFILE PICTURE
+def delete_image(request, pk):
+    user = get_object_or_404(CustomUser, pk=pk)
+    if request.user.id == user.id:
+        if user.image != 'images/default.jpg':
+            default_storage.delete(user.image.path)
+            user.image = 'images/default.jpg'
+            user.save()
+            return redirect('profile', pk=user.id)
+        else:
+            messages.warning(request, 'Your are not allowed')
+            return redirect('profile', pk=user.id)
+    else:
+        messages.success(request, 'Not allowed')
+        return redirect('profile', pk=user.id)

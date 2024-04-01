@@ -5,48 +5,62 @@
 
 {% block content %}
 
-<div class="text-center">
-  <div class="row">
-    <div class="col-lg-8">
-      <h1>Meeps!</h1>
-      <br />
-      <div id="meep-div">
-        {% for meep in meeps %}
-        <p class="py-3 mb-4 border bg-secondary-subtle rounded">
-          <strong>{{ meep.meep }} </strong><br /><br /><small
-            class="text-body-secondary"
-            >Added {{ meep.date_added|timesince }} By
+<div class="row">
+  <div class="col-lg-8">
+    <h1 class="text-center">Meeps!</h1>
+    <br />
+    <div id="meep-div">
+      {% for meep in meeps %}
+      <div class="alert alert-secondary p-2" style="height: auto">
+        <div class="row">
+          <div class="col-1 text-center pe-0 ps-0">
+            <img
+              style="width: 50px"
+              src="{{ meep.author.user.image.url }}"
+              class="img-fluid rounded-circle"
+              alt="Profile Image"
+            />
+          </div>
+          <div class="col ps-0">
             <a
               class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
               href="{% url 'profile' meep.author.id %}"
               >@{{ meep.author}}</a
-            ></small
-          >
-        </p>
-        {% endfor %}
-      </div>
-    </div>
+            >
+            -
+            <small class="text-body-secondary"
+              >{{ meep.date_added|timesince }}
+            </small>
 
-    <div class="col-lg-4">
-      {% if form %}
-      <form
-        id="form-id"
-        hx-post="{% url 'home' %}"
-        hx-target="#meep-div"
-        hx-swap="afterbegin"
-      >
-        {{ form|crispy }}
-        <button
-          formnovalidate
-          class="btn btn-primary mt-2"
-          id="submit-id-submit"
-          disabled
-        >
-          Submit
-        </button>
-      </form>
-      {% endif %}
+            <p class="mb-0">
+              <strong>{{ meep.meep }} </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
+
+  <div class="col-lg-4">
+    {% if form %}
+    <form
+      id="form-id"
+      hx-post="{% url 'home' %}"
+      hx-target="#meep-div"
+      hx-swap="afterbegin"
+    >
+      {{ form|crispy }}
+      <button
+        formnovalidate
+        class="btn btn-primary mt-2"
+        id="submit-id-submit"
+        disabled
+      >
+        Submit
+      </button>
+    </form>
+    {% endif %}
   </div>
 </div>
 

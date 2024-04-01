@@ -52,3 +52,9 @@ BASH COMMANDS : UPDATE USER
 
     git add .
     git commit -m '08- UPDATE PROFILE'
+
+
+BASH COMMANDS : ADD PROFILE PICTURE, DELETE IT
+
+    git add .
+    git commit -m '09- ADD PROFILE PICTURE - DELETE IT'

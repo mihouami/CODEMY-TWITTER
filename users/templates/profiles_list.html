@@ -11,7 +11,7 @@
   <div class="row g-0">
     <div class="col-md-4">
       <img
-        src="{% static 'images/default.jpg' %}"
+        src="{{ profile.user.image.url }}"
         class="img-fluid rounded-start"
         alt="Profile Image"
       />
@@ -29,12 +29,11 @@
           <strong>Email: </strong>{{ profile.user.email }}
           <br />
           <strong>Bio: </strong>Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. Officia sunt, dignissimos odio minima est
-          exercitationem.
+          adipisicing elit. Officia sunt.
         </p>
         <p class="card-text">
           <small class="text-body-secondary"
-            >Last Updated {{ profile.date_modified|timesince }}</small
+            >Joined since {{ profile.user.date_joined|timesince }}</small
           >
         </p>
       </div>

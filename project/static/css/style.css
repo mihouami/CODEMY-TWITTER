@@ -2,3 +2,6 @@
     display: none;
 }
 
+img {
+    object-fit: cover;
+  }

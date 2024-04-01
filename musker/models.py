@@ -6,8 +6,8 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 class Meep(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="meeps")
     meep = models.CharField(
-        unique=True,
-        max_length=30,
+        max_length=300,
+        unique=False,
         blank=False,
         null=False,
         validators=[MinLengthValidator(5), MaxLengthValidator(255)],

@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, HTML, Div
+from crispy_forms.layout import Layout, Submit, HTML, Div, Field
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'mobile']
+        fields = ['username', 'email', 'mobile', 'image']
     
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
@@ -22,6 +22,7 @@ class UserUpdateForm(forms.ModelForm):
             FloatingField("username"),
             FloatingField("email"),
             FloatingField("mobile"),
+            Field('image'),
             Div(
                 Submit(
                     "submit",
@@ -38,17 +39,18 @@ class UserUpdateForm(forms.ModelForm):
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = ['username', 'email', 'mobile', 'image', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = "post"
-        self.helper.form_action = "register"
+        self.helper.form_action = reverse_lazy("register")
         self.helper.layout = Layout(
             FloatingField("username"),
             FloatingField("email"),
             FloatingField("mobile"),
+            Field("image"),
             FloatingField("password1"),
             FloatingField("password2"),
             Div(

@@ -4,12 +4,59 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-lg-7 text-center">
+  <div class="col-lg-8">
     <div>
       <div>
-        <h1>
+        <h1 class="text-center">
           {{ profile.user.username|title }}' Profile<!---->
+        </h1>
+      </div>
+      <br />
+      {% for meep in meeps %}
+      <div class="alert alert-secondary p-2" style="height: auto">
+        <div class="row">
+          <div class="col-1 text-center pe-0 ps-0">
+            <img
+              style="width: 50px"
+              src="{{ meep.author.user.image.url }}"
+              class="img-fluid rounded-circle"
+              alt="Profile Image"
+            />
+          </div>
+          <div class="col ps-0">
+            <a
+              class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
+              href="{% url 'profile' meep.author.id %}"
+              >@{{ meep.author}}</a
+            >
+            -
+            <small class="text-body-secondary"
+              >{{ meep.date_added|timesince }}
+            </small>
 
+            <p class="mb-0">
+              <strong>{{ meep.meep }} </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="row g-3">
+      <div class="col-6 offset-3 d-flex flex-column align-items-center">
+        <img
+          src="{{ profile.user.image.url }}"
+          class="img-fluid rounded-circle"
+          alt="Profile Image"
+          width="300"
+          height="300"
+          style="object-fit: contain"
+        />
+        <div class="mt-1">
           {% if user.id == profile.user.id %}<!---->
           <a
             href="{% url 'update_profile' profile.user.id %}"
@@ -17,24 +64,17 @@
           >
             Update
           </a>
+          {% endif %}<!---->
+          {% if user.id == profile.user.id and profile.user.image.url != url %}<!---->
+          <a
+            href="{% url 'delete_image' profile.user.id %}"
+            class="btn btn-outline-danger btn-sm"
+            ><i class="bi bi-trash-fill"></i
+          ></a>
           {% endif %}
-        </h1>
+        </div>
       </div>
-      <br />
-      {% for meep in meeps %}
-      <div class="p-2 bg-secondary-subtle rounded">
-        <p><strong>{{ meep.meep }}</strong></p>
-        <small class="text-body-secondary"
-          >Last Updated {{ meep.date_modified|timesince }}</small
-        >
-      </div>
-      <br />
-      {% endfor %}
-    </div>
-  </div>
 
-  <div class="col-lg-5">
-    <div class="row g-3">
       <div class="col-12 d-flex justify-content-center">
         <div class="card w-75">
           <div class="card-header text-center fw-bold fs-4">
