@@ -7,9 +7,31 @@ from project.decorators import (
     redirect_if_logged_out,
     login_required_with_message,
 )
-from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegisterForm, UserUpdateForm
 from django.core.files.storage import default_storage
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from .forms import CustomPasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    template_name = "custom_password_change.html"
+
+    def get_success_url(self):
+        # Assuming request object is available in the view
+        pk = self.request.user.pk
+        return reverse_lazy("update_profile", kwargs={'pk': pk})
+
+    def form_valid(self, form):
+        form.save()
+        # Updating the password logs out all other sessions for the user
+        # except the current one.
+        update_session_auth_hash(self.request, form.user)
+        messages.success(self.request, "Your password has been successfully changed.")
+        return super().form_valid(form)
 
 
 # PROFILE LIST VIEW
@@ -25,8 +47,8 @@ def profiles_list(request):
 def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     meeps = profile.meeps.all()
-    url = '/media/images/default.jpg'
-    context = {"profile": profile, "meeps": meeps, "url":url}
+    url = "/media/images/default.jpg"
+    context = {"profile": profile, "meeps": meeps, "url": url}
     return render(request, "profile.html", context)
 
 
@@ -93,19 +115,18 @@ def logout_user(request):
     return redirect("home")
 
 
-
 # REGISTER USERS
 @redirect_if_logged_in
 def register_user(request):
     form = UserRegisterForm(request.POST or None, request.FILES or None)
-    if request.method == 'POST':
+    if request.method == "POST":
         if form.is_valid():
             form.save()
             messages.success(request, "You have been successfully Registered")
-            return redirect('login2')
+            return redirect("login2")
         else:
-            messages.warning(request, 'something went wrong')
-    return render(request, 'register.html', {'form':form})
+            messages.warning(request, "something went wrong")
+    return render(request, "register.html", {"form": form})
 
 
 # UPDATE PROFILE
@@ -113,30 +134,32 @@ def register_user(request):
 def update_profile(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     if request.user.id != user.id:
-        messages.warning(request, 'You are not allowed to access this page.')
-        return redirect('profile', pk=user.id)
+        messages.warning(request, "You are not allowed to access this page.")
+        return redirect("profile", pk=user.id)
     elif request.user.id == user.id:
-        form = UserUpdateForm(request.POST or None, request.FILES or None, instance=user)
-        if request.method == 'POST':
+        form = UserUpdateForm(
+            request.POST or None, request.FILES or None, instance=user
+        )
+        if request.method == "POST":
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Profile Updated!')
-                return redirect('profile', pk=user.id)
-        return render(request, 'update_profile.html', {'form':form})
-    
+                messages.success(request, "Profile Updated!")
+                return redirect("profile", pk=user.id)
+        return render(request, "update_profile.html", {"form": form})
+
 
 # DELETE PROFILE PICTURE
 def delete_image(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     if request.user.id == user.id:
-        if user.image != 'images/default.jpg':
+        if user.image != "images/default.jpg":
             default_storage.delete(user.image.path)
-            user.image = 'images/default.jpg'
+            user.image = "images/default.jpg"
             user.save()
-            return redirect('profile', pk=user.id)
+            return redirect("profile", pk=user.id)
         else:
-            messages.warning(request, 'Your are not allowed')
-            return redirect('profile', pk=user.id)
+            messages.warning(request, "Your are not allowed")
+            return redirect("profile", pk=user.id)
     else:
-        messages.success(request, 'Not allowed')
-        return redirect('profile', pk=user.id)
+        messages.success(request, "Not allowed")
+        return redirect("profile", pk=user.id)

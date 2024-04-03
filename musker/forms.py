@@ -15,19 +15,19 @@ class MeepForm(forms.ModelForm):
     class Meta:
         model = Meep
         fields = ["meep"]
-        unique_together=('meep')
+        unique_together = "meep"
         widgets = {
             "meep": forms.Textarea(
                 attrs={
                     "placeholder": "You have something to Meep!",
-                    'hx-get':reverse_lazy('check_meep'),
-                    'hx-trigger':'keyup change',
-                    'hx-target':'#div_id_meep',
-                    'hx-swap':'outerHTML',
-                    }
+                    "hx-get": reverse_lazy("check_meep"),
+                    "hx-trigger": "keyup change",
+                    "hx-target": "#div_id_meep",
+                    "hx-swap": "outerHTML",
+                }
             ),
         }
-        
+
         labels = {
             "meep": "",
         }

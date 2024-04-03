@@ -8,7 +8,7 @@ from PIL import Image
 class CustomUser(AbstractUser):
     email = models.EmailField(max_length=50, unique=True)
     mobile = models.CharField(max_length=10, blank=True)
-    image = models.ImageField(upload_to='images/', default='images/default.jpg')
+    image = models.ImageField(upload_to="images/", default="images/default.jpg")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
-'''
+
     def save(self, *args, **kwargs):
         # Call the original save method to ensure other functionalities are preserved
         super().save(*args, **kwargs)
@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
         img.save(self.image.path)
         # Call the original save method again to ensure all modifications are saved
         super().save(*args, **kwargs)
-'''
+
 
 # Profile
 class Profile(models.Model):

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Meep
 from .forms import MeepForm
 from crispy_forms.templatetags.crispy_forms_filters import as_crispy_field
+from users.models import Profile
 
 
 def home(request):
@@ -13,18 +14,19 @@ def home(request):
                 meep = form.save(commit=False)
                 meep.author = request.user.profile
                 meep.save()
-                return render(request, 'partials/meep.html', {'meep':meep, 'form':MeepForm()})
+                return render(
+                    request, "partials/meep.html", {"meep": meep, "form": MeepForm()}
+                )
         context = {"meeps": meeps, "form": form}
         return render(request, "home.html", context)
     else:
         return render(request, "home.html", {"meeps": meeps})
-    
+
 
 def check_meep(request):
     form = MeepForm(request.GET)
-    context={
-        'field':as_crispy_field(form['meep']),
-        'valid':not form['meep'].errors,
-        }
-    return render(request, 'partials/meepfield.html', context)
-
+    context = {
+        "field": as_crispy_field(form["meep"]),
+        "valid": not form["meep"].errors,
+    }
+    return render(request, "partials/meepfield.html", context)

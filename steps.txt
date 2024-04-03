@@ -58,3 +58,8 @@ BASH COMMANDS : ADD PROFILE PICTURE, DELETE IT
 
     git add .
     git commit -m '09- ADD PROFILE PICTURE - DELETE IT'
+
+BASH COMMANDS : Password Reset and change URLs using Console backend
+
+    git add .
+    git commit -m '10- Password Reset/change URLs using django auth and Console backend'

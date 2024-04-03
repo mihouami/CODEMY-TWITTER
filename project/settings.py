@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     "users",
     "crispy_forms",
     "crispy_bootstrap5",
+    'django_extensions',
+    'schema_graph',
 ]
 
 MIDDLEWARE = [
@@ -109,6 +111,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -126,5 +132,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_URL = "login"
 
 # MEDIA
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
+# Console backend
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -5,7 +5,15 @@
 
 <div class="row justify-content-center">
   <div class="col-5">
-    <h1 class="mb-3 text-center">Update Profile</h1>
+    <h1 class="mb-3 text-center">
+      Update Profile
+      <a
+        class="btn btn-outline-secondary btn-sm"
+        href="{% url 'password_change' %}"
+        >Change Password</a
+      >
+    </h1>
+
     {% crispy form %}
   </div>
 </div>
