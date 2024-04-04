@@ -63,3 +63,6 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '10- Password Reset/change URLs using django auth and Console backend'
+
+    git add .
+    git commit -m '11- Add likes/dislikes using HTMX and show only the post of people we follow'

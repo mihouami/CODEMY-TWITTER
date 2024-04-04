@@ -13,6 +13,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from .forms import CustomPasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from musker.models import Meep
 
 
 
@@ -47,8 +48,9 @@ def profiles_list(request):
 def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     meeps = profile.meeps.all()
+    liked_meeps = Meep.objects.filter(likes=profile.user)
     url = "/media/images/default.jpg"
-    context = {"profile": profile, "meeps": meeps, "url": url}
+    context = {"profile": profile, "meeps": meeps, "url": url, "liked_meeps":liked_meeps}
     return render(request, "profile.html", context)
 
 

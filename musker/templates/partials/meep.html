@@ -1,32 +1,4 @@
-<div class="alert alert-secondary p-2" style="height: auto">
-  <div class="row">
-    <div class="col-1 text-center pe-0 ps-0">
-      <img
-        style="width: 50px"
-        src="{{ meep.author.user.image.url }}"
-        class="img-fluid rounded-circle"
-        alt="Profile Image"
-      />
-    </div>
-    <div class="col ps-0">
-      <a
-        class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
-        href="{% url 'profile' meep.author.id %}"
-        >@{{ meep.author}}</a
-      >
-      -
-      <small class="text-body-secondary"
-        >{{ meep.date_added|timesince }}
-      </small>
-
-      <p class="mb-0">
-        <strong>{{ meep.meep }} </strong>
-      </p>
-    </div>
-  </div>
-</div>
-
-{% load crispy_forms_tags %}
+{% include 'meep_detail.html' %} {% load crispy_forms_tags %}
 <form
   id="form-id"
   hx-post="{% url 'home' %}"

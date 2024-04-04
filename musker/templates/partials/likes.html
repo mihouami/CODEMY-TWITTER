@@ -1,0 +1,18 @@
+{% load custom_filters %}
+<p class="mb-0" id="meep-{{ meep.id }}">
+  {% with count=meep.likes.count %}<!---->
+  {{ count }}<!---->
+  {{ count|pluralize_likes }}<!---->
+  {% endwith %}
+  <a
+    hx-get="{% url 'like-unlike' meep.id %}"
+    hx-target="#meep-{{ meep.id }}"
+    hx-swap="outerHTML"
+  >
+    {% if user in meep.likes.all %}
+    <i class="bi bi-star-fill"></i>
+    {% else %}
+    <i class="bi bi-star"></i>
+    {% endif %}
+  </a>
+</p>
