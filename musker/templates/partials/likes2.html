@@ -1,14 +1,16 @@
 {% load custom_filters %}
 <p class="mb-0">
-  {{ meep.likes.count }}<!---->
-  {{ meep.likes.count|pluralize_likes }}<!---->
+  {% with count=meep.child_meep.likes.count %}<!---->
+  {{ count }}<!---->
+  {{ count|pluralize_likes }}<!---->
+  {% endwith %}<!---->
   {% if user.is_authenticated %}
   <a
-    hx-get="{% url 'like-unlike' meep.id %}"
-    hx-target="#meep-{{ meep.id }}"
+    hx-get="{% url 'like-unlike3' meep.id %}"
+    hx-target="#col"
     hx-swap="outerHTML"
   >
-    {% if user in meep.likes.all %}
+    {% if user in meep.child_meep.likes.all %}
     <i class="bi bi-star-fill"></i>
     {% else %}
     <i class="bi bi-star"></i>
@@ -19,10 +21,10 @@
   <a
     class="link-dark"
     data-bs-toggle="modal"
-    data-bs-target="#exampleModal-{{ meep.id }}"
+    data-bs-target="#exampleModal-shared-{{ meep.child_meep.id }}"
     ><i class="bi bi-share-fill"></i>
   </a>
   {% endif %}
 </p>
 
-{% include 'include/modal.html' %}
+{% include 'include/modal2.html' %}

@@ -20,9 +20,13 @@
         >{{ meep.date_added|timesince }}
       </small>
 
+      {% if meep.child_meep %}<!---->
+      {% include 'shared_meep_detail.html' %}<!---->
+      {% else %}
       <p class="mb-0">
         <strong>{{ meep.meep }} </strong>
       </p>
+      {% endif %}<!---->
       <p class="mb-0" id="meep-{{ meep.id }}">
         {% with count=meep.likes.count %}<!---->
         {{ count }}<!---->
@@ -39,6 +43,17 @@
           <i class="bi bi-star"></i>
           {% endif %}
         </a>
+        -
+        <!-- Button trigger modal -->
+        <a
+          class="link-dark"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal-{{ meep.id }}"
+        >
+          <i class="bi bi-share-fill"></i>
+        </a>
+        <!-- Modal -->
+        {% include 'include/modal.html' %}
       </p>
     </div>
   </div>

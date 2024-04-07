@@ -16,6 +16,7 @@ class Meep(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(CustomUser, related_name="liked_by", blank=True)
+    child_meep = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name="parent_meep")
 
     def __str__(self):
         return self.meep

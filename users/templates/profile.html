@@ -12,9 +12,11 @@
         </h1>
       </div>
       <br />
-      {% for meep in meeps %} {% include 'meep_detail_2.html' %} {% endfor %}
+      {% for meep in meeps %} {% include 'meep_detail_2.html' %}<!---->
+      {% endfor %}
     </div>
-    <h2>Meeps I like</h2>
+    <br />
+    <h2>Liked Meeps</h2>
     {% for meep in liked_meeps %} {% include 'meep_detail_2.html' %}<!---->
     {% endfor %}
   </div>

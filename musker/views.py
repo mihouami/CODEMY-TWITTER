@@ -4,6 +4,7 @@ from .forms import MeepForm
 from crispy_forms.templatetags.crispy_forms_filters import as_crispy_field
 from project.decorators import login_required_with_message
 from users.models import Profile
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -34,6 +35,7 @@ def check_meep(request):
     }
     return render(request, "partials/meepfield.html", context)
 
+
 @login_required_with_message
 def Like_unlike(request, pk):
     meep = get_object_or_404(Meep, pk=pk)
@@ -41,7 +43,17 @@ def Like_unlike(request, pk):
         meep.likes.remove(request.user)
     else:
         meep.likes.add(request.user)
-    return render(request, 'partials/likes.html', {'meep':meep})
+    return render(request, 'meep_detail.html', {'meep':meep})
+
+
+def like_unlike3(request, pk):
+    meep = get_object_or_404(Meep, pk=pk)
+    child = meep.child_meep
+    if request.user in child.likes.all():
+        child.likes.remove(request.user)
+    else:
+        child.likes.add(request.user)
+    return render(request, 'meep_detail.html', {'meep':meep})
 
 
 @login_required_with_message
@@ -58,6 +70,37 @@ def Like_unlike2(request, pk, pk2):
     context = {"profile": profile, "meeps": meeps, "liked_meeps":liked_meeps}
     # return redirect(request.META.get('HTTP_REFERER'))
     return render(request, 'partials/col.html', context)
+
+def meep_share(request, pk):
+    meep = get_object_or_404(Meep, pk=pk)
+    return render(request, 'meep_share.html', {'meep':meep})
+
+def send_meep_link(request, pk):
+    email = request.POST.get('email')
+    subject = request.POST.get('object')
+    message = request.POST.get('body')
+    final_message = f'''
+            Hello,\n
+            Check out this meep : http://127.0.0.1:8000/meep_share/{pk}/\n
+            Message from the sender : {message}
+            '''
+    send_mail(
+    subject,  # Subject of the email
+    final_message,  # Message of the email
+    'from@example.com',  # Sender's email address
+    [email],  # List of recipients' email addresses
+    fail_silently=False,  # Set to True to suppress errors
+)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def share_meep_profile(request, pk):
+    if request.user.is_authenticated:
+        child_meep = get_object_or_404(Meep, pk=pk)
+        meep = Meep(author=request.user.profile, meep='None', child_meep=child_meep)
+        meep.save()
+        return redirect('home')
+
 
     
 

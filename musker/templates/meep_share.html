@@ -1,0 +1,15 @@
+{% extends 'extends/base.html' %}<!---->
+{% load crispy_forms_tags %}<!---->
+
+{% block title %}Shared meep{% endblock %}<!---->
+
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <br />
+    <div id="meep-div">{% include 'meep_detail.html' %}</div>
+  </div>
+</div>
+
+{% endblock %}

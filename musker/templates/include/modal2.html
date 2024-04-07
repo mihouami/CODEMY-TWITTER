@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal-shared-{{ meep.child_meep.id }}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Share Meep</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form action="{% url 'send-meep-link' meep.id %}" method="post">
+        {% csrf_token%}
+        <div class="modal-body">
+          <input
+            class="form-control"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <br />
+          <input
+            class="form-control"
+            type="text"
+            name="object"
+            placeholder="Email object"
+            required
+          />
+          <br />
+          <textarea
+            class="form-control"
+            name="body"
+            cols="20"
+            rows="10"
+            placeholder="Message Body"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Share Meep by email
+          </button>
+          <a
+            href="{% url 'share-meep-profile' meep.id %}"
+            type="button"
+            class="btn btn-outline-primary"
+          >
+            Share on my profile
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

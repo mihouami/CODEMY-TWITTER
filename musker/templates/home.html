@@ -10,7 +10,9 @@
     <h1 class="text-center">Meeps!</h1>
     <br />
     <div id="meep-div">
-      {% for meep in meeps %} {% include 'meep_detail.html' %} {% endfor %}
+      {% for meep in meeps %}<!---->
+      {% include 'meep_detail.html' %}<!---->
+      {% endfor %}
     </div>
   </div>
 

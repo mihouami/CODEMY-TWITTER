@@ -66,3 +66,6 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '11- Add likes/dislikes using HTMX and show only the post of people we follow'
+
+    git add .
+    git commit -m '12- Share meeps two ways - email and within my meeps'

@@ -1,13 +1,9 @@
-<div
-  class="alert alert-secondary p-2"
-  style="height: auto"
-  id="meep-{{ meep.id }}"
->
+<div class="alert alert-light p-2 m-2" style="height: auto">
   <div class="row">
     <div class="col-1 text-center pe-0 ps-0">
       <img
         style="width: 50px"
-        src="{{ meep.author.user.image.url }}"
+        src="{{ meep.child_meep.author.user.image.url }}"
         class="img-fluid rounded-circle"
         alt="Profile Image"
       />
@@ -15,22 +11,18 @@
     <div class="col ps-0">
       <a
         class="link-opacity-50-hover link-underline link-underline-opacity-0 link-primary fw-bold"
+        href="{% url 'profile' meep.child_meep.author.id %}"
         href="{% url 'profile' meep.author.id %}"
-        >@{{ meep.author}}</a
+        >@{{ meep.child_meep.author}}</a
       >
       -
       <small class="text-body-secondary"
-        >{{ meep.date_added|timesince }}
+        >{{ meep.child_meep.date_added|timesince }}
       </small>
-
-      {% if meep.child_meep %}<!---->
-      {% include 'shared_meep_detail.html' %}<!---->
-      {% else %}
       <p class="mb-0">
-        <strong>{{ meep.meep }} </strong>
+        <strong>{{ meep.child_meep.meep }} </strong>
       </p>
-      {% endif %}<!---->
-      {% include 'partials/likes.html' %}
+      {% include 'partials/likes2.html' %}
     </div>
   </div>
 </div>

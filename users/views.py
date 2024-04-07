@@ -151,6 +151,7 @@ def update_profile(request, pk):
 
 
 # DELETE PROFILE PICTURE
+@login_required_with_message
 def delete_image(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     if request.user.id == user.id:
