@@ -9,6 +9,8 @@ class CustomUser(AbstractUser):
     email = models.EmailField(max_length=50, unique=True)
     mobile = models.CharField(max_length=10, blank=True)
     image = models.ImageField(upload_to="images/", default="images/default.jpg")
+    bio = models.CharField(null=True, blank=True, max_length=500)
+    linkedin = models.URLField(unique=True, blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

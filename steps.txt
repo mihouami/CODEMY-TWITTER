@@ -69,3 +69,6 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '12- Share meeps two ways - email and within my meeps'
+
+    git add .
+    git commit -m '13- add profile image to navbar'

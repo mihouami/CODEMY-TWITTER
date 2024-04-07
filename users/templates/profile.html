@@ -49,11 +49,27 @@
           ></a>
           {% endif %}
         </div>
+        {% if profile.user.linkedin %}
+        <a
+          href="{{ profile.user.linkedin }}"
+          class="link link-dark link-underline-opacity-0 link-opacity-75-hover mt-2"
+          ><i class="bi bi-linkedin"></i> <strong>LinkedIn</strong></a
+        >
+        {% endif %}
       </div>
+
+      {% if profile.user.bio %}
+      <div class="col-12 d-flex justify-content-center">
+        <div class="card w-75">
+          <div class="card-header text-center fw-bold fs-5">Bio</div>
+          <div class="card-body text-center">{{ profile.user.bio }}</div>
+        </div>
+      </div>
+      {% endif %}
 
       <div class="col-12 d-flex justify-content-center">
         <div class="card w-75">
-          <div class="card-header text-center fw-bold fs-4">
+          <div class="card-header text-center fw-bold fs-5">
             {{ profile.user.username|title }} Follows
           </div>
           <div class="card-body text-center">
@@ -72,7 +88,7 @@
 
       <div class="col-12 d-flex justify-content-center">
         <div class="card w-75">
-          <div class="card-header text-center fw-bold fs-4">
+          <div class="card-header text-center fw-bold fs-5">
             {{ profile.user.username|title }}'s Followed by
           </div>
           <div class="card-body text-center">
@@ -119,4 +135,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock %} .

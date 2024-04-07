@@ -7,16 +7,16 @@
 
 {% for profile in profiles %}<!---->
 
-<div class="card mb-3" style="max-width: 540px">
+<div class="card mb-3" style="max-width: auto">
   <div class="row g-0">
-    <div class="col-md-4">
+    <div class="col-md-2">
       <img
         src="{{ profile.user.image.url }}"
         class="img-fluid rounded-start"
         alt="Profile Image"
       />
     </div>
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="card-body">
         <h5 class="card-title">
           <a
@@ -28,8 +28,16 @@
         <p class="card-text">
           <strong>Email: </strong>{{ profile.user.email }}
           <br />
-          <strong>Bio: </strong>Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. Officia sunt.
+          {% if profile.user.bio %}
+          <strong>Bio: </strong>{{ profile.user.bio }}
+          <br />
+          {% endif %} {% if profile.user.linkedin %}
+          <a
+            href="{{ profile.user.linkedin }}"
+            class="link link-dark link-underline-opacity-0 link-opacity-75-hover"
+            ><i class="bi bi-linkedin"></i> <strong>LinkedIn</strong></a
+          >
+          {% endif %}
         </p>
         <p class="card-text">
           <small class="text-body-secondary"

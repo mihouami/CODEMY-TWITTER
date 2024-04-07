@@ -73,9 +73,17 @@ class CustomPasswordResetEmailForm(PasswordResetForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    bio = forms.CharField(
+        label="Talk us about you?",
+        widget=forms.Textarea,
+        help_text="Do not include personal or financial information, like your "
+        "National Insurance number or credit card details.",
+        error_messages={"required": "Enter a short description of your application"},
+    )
+
     class Meta:
         model = CustomUser
-        fields = ["username", "email", "mobile", "image"]
+        fields = ["username", "email", "mobile", "image", "bio", 'linkedin']
 
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
@@ -89,6 +97,8 @@ class UserUpdateForm(forms.ModelForm):
             FloatingField("email"),
             FloatingField("mobile"),
             Field("image"),
+            FloatingField("linkedin"),
+            Field("bio"),
             Div(
                 Submit(
                     "submit",
