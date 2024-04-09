@@ -70,10 +70,10 @@
       <div class="col-12 d-flex justify-content-center">
         <div class="card w-75">
           <div class="card-header text-center fw-bold fs-5">
-            {{ profile.user.username|title }} Follows
+            {{ profile.user.username|title }} Follows ({{ follows_count }})
           </div>
           <div class="card-body text-center">
-            {% for follow in profile.follows.all %}
+            {% for follow in profile.follows.all|slice:3 %}
             <p class="card-text fw-bold">
               <a
                 class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
@@ -86,7 +86,9 @@
               ></a>
               {% endif %}
             </p>
-            {% endfor %}
+            {% endfor %}<!---->
+            {% if user == profile.user %}
+            <a href="{% url 'follows' user.id %}">View all</a> {% endif %}
           </div>
         </div>
       </div>
@@ -94,10 +96,10 @@
       <div class="col-12 d-flex justify-content-center">
         <div class="card w-75">
           <div class="card-header text-center fw-bold fs-5">
-            {{ profile.user.username|title }}'s Followed by
+            {{ profile.user.username|title }}'s Followed by ({{ followed_count}}<!---->)
           </div>
           <div class="card-body text-center">
-            {% for followed in profile.followed_by.all %}
+            {% for followed in profile.followed_by.all|slice:3 %}
             <p class="card-text fw-bold">
               <a
                 class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
@@ -115,6 +117,9 @@
               {% endif %}
             </p>
             {% endfor %}
+            <!---->
+            {% if user == profile.user %}
+            <a href="{% url 'followed' user.id %}">View all</a> {% endif %}
           </div>
         </div>
       </div>

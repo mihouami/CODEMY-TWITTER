@@ -13,8 +13,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from .forms import CustomPasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from musker.models import Meep
-
+from musker.models import Meep, Profile
 
 
 class CustomPasswordChangeView(PasswordChangeView):
@@ -24,7 +23,7 @@ class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
         # Assuming request object is available in the view
         pk = self.request.user.pk
-        return reverse_lazy("update_profile", kwargs={'pk': pk})
+        return reverse_lazy("update_profile", kwargs={"pk": pk})
 
     def form_valid(self, form):
         form.save()
@@ -47,11 +46,39 @@ def profiles_list(request):
 @login_required_with_message
 def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
+    follows_count = profile.follows.count()
+    followed_count = profile.followed_by.count()
     meeps = profile.meeps.all()
     liked_meeps = Meep.objects.filter(likes=profile.user)
     url = "/media/images/default.jpg"
-    context = {"profile": profile, "meeps": meeps, "url": url, "liked_meeps":liked_meeps}
+    context = {
+        "profile": profile,
+        "meeps": meeps,
+        "url": url,
+        "liked_meeps": liked_meeps,
+        "follows_count": follows_count,
+        "followed_count": followed_count,
+    }
     return render(request, "profile.html", context)
+
+
+@login_required_with_message
+def follows(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if request.user.id == profile.user.id:
+        return render(request, 'follows.html', {'profile':profile})
+    else:
+        messages.warning(request, 'Your are not allowed to see other profiles followers list')
+        return redirect('profile', pk=request.user.id)
+    
+@login_required_with_message
+def followed(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if request.user.id == profile.user.id:
+        return render(request, 'followed.html', {'profile':profile})
+    else:
+        messages.warning(request, 'Your are not allowed to see other profiles followers list')
+        return redirect('profile', pk=request.user.id)
 
 
 # FOLLOW - UNFOLLOW VIEW
@@ -62,7 +89,7 @@ def follow_unfollow(request, pk):
         request.user.profile.follows.remove(profile)
     else:
         request.user.profile.follows.add(profile)
-    return redirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 # LOGIN USERS 1

@@ -1,0 +1,64 @@
+{% extends 'extends/base.html' %}<!---->
+{% block title %}Profiles{% endblock %}<!---->
+{% load static %}<!---->
+
+{% block content %}
+<h1>{{ user }}' Followed List ({{ user.profile.followed_by.count }})</h1>
+<br />
+
+{% for followed in profile.followed_by.all %}<!---->
+
+<div class="card mb-3" style="max-width: auto">
+  <div class="row g-0">
+    <div class="col-md-2">
+      <img
+        src="{{ followed.user.image.url }}"
+        class="img-fluid rounded-start"
+        alt="Profile Image"
+      />
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a
+            class="link-opacity-50-hover link-underline link-underline-opacity-0 link-dark"
+            href="{% url 'profile' followed.user_id %}"
+            >@{{ followed.user.username|title }}</a
+          >
+          {% if followed in user.profile.follows.all %}
+          <a href="{% url 'follow_unfollow' followed.id %}"
+            ><i class="bi bi-person-dash-fill" style="color: red"></i
+          ></a>
+          {% else %}
+          <a href="{% url 'follow_unfollow' followed.id %}" style="color: gray"
+            ><i class="bi bi-person-plus-fill" style="color: green"></i
+          ></a>
+          {% endif %}
+        </h5>
+        <p class="card-text">
+          <strong>Email: </strong>{{ followed.user.email }}
+          <br />
+          {% if followed.user.bio %}
+          <strong>Bio: </strong>{{ followed.user.bio }}
+          <br />
+          {% endif %} {% if followed.user.linkedin %}
+          <a
+            href="{{ followed.user.linkedin }}"
+            class="link link-dark link-underline-opacity-0 link-opacity-75-hover"
+            ><i class="bi bi-linkedin"></i> <strong>LinkedIn</strong></a
+          >
+          {% endif %}
+        </p>
+        <p class="card-text">
+          <small class="text-body-secondary"
+            >Joined since {{ followed.user.date_joined|timesince }}</small
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}<!---->
+
+{% endblock %}

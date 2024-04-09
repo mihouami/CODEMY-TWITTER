@@ -3,10 +3,9 @@
 {% load static %}<!---->
 
 {% block content %}
-<h1>Profiles List ({{ profiles.count }})</h1>
+<h1>{{ user }}' Follows List ({{ user.profile.follows.count }})</h1>
 <br />
-
-{% for profile in profiles %}<!---->
+{% for profile in profile.follows.all %}<!---->
 
 <div class="card mb-3" style="max-width: auto">
   <div class="row g-0">
@@ -25,6 +24,9 @@
             href="{% url 'profile' profile.user_id %}"
             >@{{ profile.user.username|title }}</a
           >
+          <a href="{% url 'follow_unfollow' profile.id %}"
+            ><i class="bi bi-person-dash-fill" style="color: red"></i
+          ></a>
         </h5>
         <p class="card-text">
           <strong>Email: </strong>{{ profile.user.email }}

@@ -29,8 +29,8 @@ INSTALLED_APPS = [
     "users",
     "crispy_forms",
     "crispy_bootstrap5",
-    'django_extensions',
-    'schema_graph',
+    "django_extensions",
+    "schema_graph",
 ]
 
 MIDDLEWARE = [
