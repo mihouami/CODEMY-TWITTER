@@ -72,3 +72,6 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '13- add profile image to navbar'
+
+    git add .
+    git commit -m '14- unfollow/follow from profile page'

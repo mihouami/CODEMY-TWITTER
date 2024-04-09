@@ -80,6 +80,11 @@
                 href="{% url 'profile' follow.id %}"
                 >@{{ follow|lower }}</a
               >
+              {% if user == profile.user %}
+              <a href="{% url 'follow_unfollow' follow.id %}"
+                ><i class="bi bi-person-dash-fill" style="color: red"></i
+              ></a>
+              {% endif %}
             </p>
             {% endfor %}
           </div>
@@ -99,6 +104,15 @@
                 href="{% url 'profile' followed.id %}"
                 >@{{ followed|lower }}</a
               >
+              {% if user == profile.user %}<!---->
+              {% if followed not in profile.follows.all %}<!---->
+              <a
+                href="{% url 'follow_unfollow' followed.id %}"
+                style="color: gray"
+                ><i class="bi bi-person-plus-fill" style="color: green"></i
+              ></a>
+              {% endif %}<!---->
+              {% endif %}
             </p>
             {% endfor %}
           </div>

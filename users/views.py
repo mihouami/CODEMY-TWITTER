@@ -62,7 +62,7 @@ def follow_unfollow(request, pk):
         request.user.profile.follows.remove(profile)
     else:
         request.user.profile.follows.add(profile)
-    return redirect("profile", pk=pk)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 # LOGIN USERS 1
