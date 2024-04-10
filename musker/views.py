@@ -120,4 +120,17 @@ def delete_meep(request, pk):
     else:
         messages.warning(request, 'Your are not allowed to delete this meep')
         return redirect(request.META.get("HTTP_REFERER"))
+    
+@login_required_with_message
+def update_meep(request, pk):
+    meep = get_object_or_404(Meep, pk=pk)
+    form = MeepForm(request.POST or None, instance=meep)
+    if request.user.id == meep.author.user.id:
+        if request.method == 'POST':
+            form.save()
+            return render(request, 'meep_detail.html', {'meep':meep})
+        return render(request, 'partials/meep_form.html', {'form':form, 'meep':meep})
+    else:
+        messages.warning(request, 'Your are not allowed to update this meep')
+        return redirect('profile', pk=request.user.id)
 

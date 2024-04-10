@@ -77,4 +77,4 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
     git commit -m '14- unfollow/follow from profile page'
 
     git add .
-    git commit -m '15- follwers lit /followed list view '
+    git commit -m '15- followers list /followed list view + delete meep'

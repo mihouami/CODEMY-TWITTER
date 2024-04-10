@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %}<!---->
+<form
+  id="update-form-{{ meep.id }}"
+  hx-post="{% url 'update-meep' meep.id %}"
+  hx-swap="this"
+>
+  {{ form|crispy }}
+  <button formnovalidate class="btn btn-primary my-2" id="submit-id-submit">
+    Submit
+  </button>
+</form>

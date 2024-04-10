@@ -11,4 +11,5 @@ urlpatterns = [
     path("share_meep_profile/<int:pk>/", share_meep_profile, name="share-meep-profile"),
     path("like_unlike3/<int:pk>/", like_unlike3, name="like-unlike3"),
     path("delete_meep/<int:pk>/", delete_meep, name="delete-meep"),
+    path("update_meep/<int:pk>/", update_meep, name="update-meep"),
 ]

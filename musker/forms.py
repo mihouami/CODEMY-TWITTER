@@ -21,8 +21,8 @@ class MeepForm(forms.ModelForm):
                 attrs={
                     "placeholder": "You have something to Meep!",
                     "hx-get": reverse_lazy("check_meep"),
-                    "hx-trigger": "keyup change",
-                    "hx-target": "#div_id_meep",
+                    "hx-trigger": "mouseout",
+                    "hx-target": "this",
                     "hx-swap": "outerHTML",
                 }
             ),

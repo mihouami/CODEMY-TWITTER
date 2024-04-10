@@ -31,6 +31,14 @@
 <a class="me-1" href="{% url 'delete-meep' meep.id %}"
   ><i style="color: red" class="bi bi-trash2-fill"></i
 ></a>
+
+<!--EDIT LINK-->
+<a
+  hx-get="{% url 'update-meep' meep.id %}"
+  hx-target="#meep-{{ meep.id }}"
+  hx-swap="outerHTML"
+  ><i class="bi bi-pencil" style="color: gray"></i
+></a>
 {% endif %}<!---->
 
 {% endif %}
