@@ -84,3 +84,7 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '17- Add Search'
+
+    git remote add origin https://github.com/mihouami/CODEMY-TWITTER.git
+    git branch -M main
+    git push -u origin main
