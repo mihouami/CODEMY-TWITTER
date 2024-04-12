@@ -11,11 +11,19 @@ from django.contrib import messages
 def home(request):
     if request.user.is_authenticated:
         followed_profiles = request.user.profile.follows.all()
-        meeps = (
-            Meep.objects.all()
-            .order_by("-date_added")
-            .filter(author__in=followed_profiles)
-        )
+        q = request.GET.get('q')
+        if q:
+            meeps = (
+                Meep.objects.all()
+                .order_by("-date_added")
+                .filter(author__in=followed_profiles, meep__contains=q)
+            )
+        else:
+            meeps = (
+                Meep.objects.all()
+                .order_by("-date_added")
+                .filter(author__in=followed_profiles)
+            )
         form = MeepForm(request.POST or None)
         if request.method == "POST":
             if form.is_valid():

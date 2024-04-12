@@ -37,7 +37,11 @@ class CustomPasswordChangeView(PasswordChangeView):
 # PROFILE LIST VIEW
 @login_required_with_message
 def profiles_list(request):
-    profiles = Profile.objects.exclude(user=request.user)
+    q = request.GET.get('q')
+    if q:
+        profiles = Profile.objects.exclude(user=request.user).filter(user__username__contains=q)
+    else:
+        profiles = Profile.objects.exclude(user=request.user)
     context = {"profiles": profiles}
     return render(request, "profiles_list.html", context)
 
@@ -48,8 +52,13 @@ def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     follows_count = profile.follows.count()
     followed_count = profile.followed_by.count()
-    meeps = profile.meeps.all()
-    liked_meeps = Meep.objects.filter(likes=profile.user)
+    q = request.GET.get('q')
+    if q:
+        meeps = profile.meeps.filter(meep__contains=q)
+        liked_meeps = Meep.objects.filter(likes=profile.user, meep__contains=q)
+    else:
+        meeps = profile.meeps.all()
+        liked_meeps = Meep.objects.filter(likes=profile.user)
     url = "/media/images/default.jpg"
     context = {
         "profile": profile,

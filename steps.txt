@@ -78,3 +78,9 @@ BASH COMMANDS : Password Reset and change URLs using Console backend
 
     git add .
     git commit -m '15- followers list /followed list view + delete meep'
+
+    git add .
+    git commit -m '16- update meeps using HTMX'
+
+    git add .
+    git commit -m '17- Add Search'
